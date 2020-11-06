@@ -14,8 +14,10 @@ class CreateFirmwareView(View):
         form = CreateFirmwareForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            context = {'create_firmware_form': CreateFirmwareForm(),
-                       'success': 'Succesfully created new firmware'}
+            context = {
+                'create_firmware_form': CreateFirmwareForm(),
+                'success': 'Succesfully created new firmware'
+            }
         else:
             context = {'create_firmware_form': form}
         return TemplateResponse(request, self.template_name, context)
