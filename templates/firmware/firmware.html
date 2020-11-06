@@ -1,0 +1,45 @@
+{% extends 'includes/layout.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
+    <div class="row">
+        {% for firmware in firmwares %}
+            <div class='col-lg-4' style='margin: 15px 0'>
+                <div class="row">
+                    <p> <strong> Name </strong>: {{firmware.name}} </p>
+                    <p> <strong> Offset </strong>: {{firmware.offset}} </p>
+                    <p> <a href='/media/{{ firmware.file }}' /> File </a> </p>
+                    <p> <a href='{% url 'firmware:firmware-detail' firmware.id %}'> Detail </a> </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href='{% url 'firmware:create-firmware' %}' class='button'>Create firmware</a>     
+
+    {% if create_firmware_form %}
+        <h3> Create firmware form </h3>
+        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+            {{ create_firmware_form.as_p }}
+            <button type='submit'> Create firmware </button>
+        </form>
+    {% endif %}
+
+    {% if firmware %}
+        <h3> Firmware detail </h3>
+        <p> <strong> Name </strong>: {{firmware.name}} </p>
+        <p> <strong> Value </strong>: {{firmware.offset}} </p>
+        <img class='col-lg-4' src='/media/{{ firmware.file }}' />
+    {% endif %}
+
+    {% if search_firmware_form %}
+        <h3> Search firmware form </h3>
+        <form method='post'>{% csrf_token %}
+            {{ search_firmware_form.as_p }}
+            <button type='submit'> Search </button>
+        </form>
+    {% endif %}
+
+    
+{% endblock %}
