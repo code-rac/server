@@ -1,0 +1,23 @@
+{% extends 'includes/layout.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+
+{% block content %}
+    {% if backdoor_add_code_form %}
+        <form method='post'>
+            {{ backdoor_add_code_form.as_p }}
+            <button type='submit'> Add </button>
+        </form>
+    {% endif %}
+
+    {% for code in codes %}
+        <div class='col-lg-4' style='margin: 15px 0'>
+            <div class="row">
+                <p> <strong> Name </strong>: {{code.name}} </p>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
