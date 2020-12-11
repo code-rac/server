@@ -1,0 +1,34 @@
+{% extends "includes/layout.html" %}
+
+{% block breadcrumb %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">Register</li>
+            </ol>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h2>Register</h2>
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" value="Register">Register</button>
+        </form>
+        {% if message %}
+            <p> {{ message }} </p>
+        {% endif %}        
+
+        {% if redirect %}
+            <script>
+                var timer = setTimeout(function() {
+                    window.location='/'
+                }, 2000);
+            </script>
+        {% endif %}
+    </div>
+{% endblock %}

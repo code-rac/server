@@ -7,7 +7,6 @@ from django.utils.decorators import method_decorator
 from django.template.response import TemplateResponse
 
 @method_decorator([csrf_exempt], name='dispatch')
-
 class BackdoorAddCodeView(View):
 
     template_name = 'firmware/code.html'

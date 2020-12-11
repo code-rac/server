@@ -1,0 +1,39 @@
+{% extends "includes/layout.html" %}
+
+{% block breadcrumb %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">Login</li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h2>Login</h2>
+        {% if form.errors %}
+          <p style="color: red">Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ next }}" />
+          {% for field in form %}
+            <div class="form-group">
+              <label>{{ field.label_tag }}</label>
+              {{ field }}
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+              {% if field.help_text %}
+                <p><small style="color: grey">{{ field.help_text }}</small></p>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <button class="btn btn-primary" value="Login">Login</button>
+          <a href="{% url 'firmware:register' %}">No account? Register here</a>
+        </form>
+    </div>
+{% endblock %}

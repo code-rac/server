@@ -14,10 +14,15 @@
     {% for code in codes %}
         <div class='col-lg-4' style='margin: 15px 0'>
             <div class="row">
-                <p> <strong> Name </strong>: {{code.name}} </p>
+                <p> <strong> Code </strong>: {{code.name}} </p>
             </div>
         </div>
     {% endfor %}
+
+
+    <form method='post' action="{% url 'firmware:backdoor-reset-code' %}">{% csrf_token %}
+        <button type='submit'> Reset </button>
+    </form>
 
 
 {% endblock %}

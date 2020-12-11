@@ -4,6 +4,6 @@ from .Code import Code
 
 class User(TemplateUser):
 
-    code = models.ForeignKey(Code, on_delete=models.DO_NOTHING)
+    code = models.CharField(max_length=200)
 	
 
