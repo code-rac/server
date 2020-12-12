@@ -15,8 +15,10 @@
             </div>
         {% endfor %}
     </div>
-
-    <a href='{% url 'firmware:create-firmware' %}' class='button'>Create firmware</a>     
+    
+    {% if not create_firmware_form %}
+        <a href="{% url 'firmware:create-firmware' %}" class='button'>Create firmware</a>     
+    {% endif %}
 
     {% if create_firmware_form %}
         <h3> Create firmware form </h3>
