@@ -9,8 +9,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <ol class="breadcrumb">
-                        <li><a href="{% url 'firmware:index' %}">Home</a></li>
-                        <li><a href="{% url 'firmware:firmware' %}">Firmwares</a></li>
+                        {% if user.is_authenticated %}
+
+                            <li><a href="{% url 'firmware:index' %}">Home</a></li>
+
+                            {% if moderator %}
+                                <li><a href="{% url 'firmware:firmware' %}">Firmwares</a></li>
+                                <li><a href="{% url 'firmware:edit-permission' %}">Edit Permission</a></li>
+                            {% endif %}
+
+                        {% endif %}
+
                     </ol>
                 </div>
             </div>

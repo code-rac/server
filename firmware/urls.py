@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^backdoor-reset-code$', BackdoorResetCodeView.as_view(), name='backdoor-reset-code'),
     url(r'^register$', RegisterView.as_view(), name='register'),
     url(r'^login$', LoginView.as_view(), name='login'), 
-    # url(r'^logout/$', LogoutView.as_view(), {'next_page': '/', 'template_name': 'firmware:index', 'extra_context': {'success': 'Logged out'}}, name='logout'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^edit-permission/$', EditPermissionView.as_view(), name='edit-permission'),
 ]

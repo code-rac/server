@@ -46,10 +46,10 @@ class RegisterForm(forms.ModelForm):
 
         user = super(RegisterForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-
+        user.code = self.cleaned_data['code']
         user.save()
 
         group = Group.objects.get(name='user')
         group.user_set.add(user)
-        
+
         return user
