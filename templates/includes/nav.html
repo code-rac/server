@@ -18,7 +18,11 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav" style="float: right;">
                     {% if user.is_authenticated %}
-                        <li class="navbar-text navbar-left">Logged in as {{ user.username }}</li>
+                        <li class="navbar-text navbar-left">Logged in as
+                        {% if moderator %}
+                            <strong>moderator</strong>
+                        {% endif %}
+                        {{ user.username }}</li>
 
                         <li>
                             <a href="{% url 'firmware:logout' %}">Logout</a>

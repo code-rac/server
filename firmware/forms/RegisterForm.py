@@ -1,6 +1,7 @@
 from ..models import *
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import Group
 
 class RegisterForm(forms.ModelForm):
 
@@ -38,13 +39,17 @@ class RegisterForm(forms.ModelForm):
         return code
 
 
-    def save(self, commit=True):
+    def save(self):
         code = Code.objects.get(name=self.cleaned_data['code'])
         code.is_used = True
         code.save()
 
         user = super(RegisterForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-        if commit:
-            user.save()
+
+        user.save()
+
+        group = Group.objects.get(name='user')
+        group.user_set.add(user)
+        
         return user
