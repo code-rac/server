@@ -6,10 +6,10 @@
 
 
     <div class="row">
-        {% if search_user_by_code_form %}
-            <h3> Search user by code </h3>
+        {% if search_user_form %}
+            <h3> Search </h3>
             <form method='post'>{% csrf_token %}
-                {{ search_user_by_code_form.as_p }}
+                {{ search_user_form.as_p }}
                 <button type='submit'> Search </button>
             </form>
         {% endif %}

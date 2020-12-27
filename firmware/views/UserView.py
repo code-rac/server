@@ -46,7 +46,7 @@ class UserView(View):
         items = self.get_items(users)
         context = {
             'items': items, 
-            'search_user_by_code_form': SearchUserForm()
+            'search_user_form': SearchUserForm()
         }
         return TemplateResponse(request, self.template_name, context)
 
@@ -57,16 +57,16 @@ class UserView(View):
 
             if items:
                 context = {
-                    'search_user_by_code_form': SearchUserForm(),
+                    'search_user_form': SearchUserForm(),
                     'items': items
                 }
             else:
                 context = {
-                    'search_user_by_code_form': form, 
+                    'search_user_form': form, 
                     'error': 'User does not exist'
                 }
         else:
             context = {
-                'search_user_by_code_form': form,
+                'search_user_form': form,
             }
         return TemplateResponse(request, self.template_name, context)
