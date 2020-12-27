@@ -12,5 +12,7 @@ urlpatterns = [
     url(r'^register$', RegisterView.as_view(), name='register'),
     url(r'^login$', LoginView.as_view(), name='login'), 
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
-    url(r'^edit-permission/$', EditPermissionView.as_view(), name='edit-permission'),
+    url(r'^user/$', UserView.as_view(), name='user'),
+    url(r'^user-detail/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user-detail'),
+    url(r'^user-edit/(?P<pk>\d+)/$', UserEditView.as_view(), name='user-edit'),
 ]

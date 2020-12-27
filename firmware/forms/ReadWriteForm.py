@@ -11,7 +11,7 @@ class ReadWriteForm(forms.Form):
         ('Read/Write', 'Read/Write')
     ]
 
-    choice = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+    choice = forms.ChoiceField(choices=CHOICES, widget=forms.Select(attrs={'onchange': 'this.form.submit();'}))
     username = forms.CharField(widget=forms.HiddenInput)
 
     def save(self):

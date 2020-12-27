@@ -6,4 +6,6 @@ from .BackdoorAddCodeView import BackdoorAddCodeView
 from .BackdoorResetCodeView import BackdoorResetCodeView
 from .RegisterView import RegisterView
 from .LoginView import LoginView
-from .EditPermissionView import EditPermissionView
+from .UserView import UserView
+from .UserDetailView import UserDetailView
+from .UserEditView import UserEditView
