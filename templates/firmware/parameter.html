@@ -1,0 +1,65 @@
+{% extends 'includes/layout.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
+
+
+    <div class="row">
+        {% if search_parameter_form %}
+            <h3> Search </h3>
+            <form method='post'>{% csrf_token %}
+                {{ search_parameter_form.as_p }}
+                <button type='submit'> Search </button>
+            </form>
+        {% endif %}
+    </div>
+
+
+    <div class="row">
+        {% for item in items %}
+            <div class='col-lg-4' style='margin: 15px 0'>
+                <div class="row">
+                    <p> <strong> Name </strong>: {{item.name}} </p>
+                    <p> <strong> Name_vn </strong>: {{item.name_vn}} </p>
+                    <p> <strong> Description </strong>: {{item.description}} </p>
+                    <p> <strong> Unit </strong>: {{item.unit}} </p>
+                    <p> <strong> Upper </strong>: {{item.upper}} </p>
+                    <p> <strong> Lower </strong>: {{item.lower}} </p>
+                    <p> <strong> Recommend </strong>: {{item.recommend}} </p>
+                    <p> <a href='{% url 'firmware:parameter-edit' item.id %}'> Edit </a> </p>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    {% if not create_parameter_form and not parameter_edit_form %}
+        <a href="{% url 'firmware:create-parameter' %}" class='button'> Create parameter</a>     
+    {% endif %}
+
+    {% if create_parameter_form %}
+        <h3> Create parameter form </h3>
+        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+            {{ create_parameter_form.as_p }}
+            <button type='submit'> Create parameter </button>
+        </form>
+    {% endif %}
+
+
+
+    <div class="row">
+
+        {% if parameter_edit_form %}
+            <form method='post'>{% csrf_token %}
+                {{ parameter_edit_form.as_p }}
+                <button type='submit'> Submit </button>
+
+            </form>
+        {% endif %}
+
+    </div>
+
+
+    
+{% endblock %}

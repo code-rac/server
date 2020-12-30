@@ -5,3 +5,6 @@ from .RegisterForm import RegisterForm
 from .ReadWriteForm import ReadWriteForm
 from .UserEditForm import UserEditForm
 from .SearchUserForm import SearchUserForm
+from .CreateParameterForm import CreateParameterForm
+from .SearchParameterForm import SearchParameterForm
+from .ParameterEditForm import ParameterEditForm

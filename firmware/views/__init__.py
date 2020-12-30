@@ -9,3 +9,6 @@ from .LoginView import LoginView
 from .UserView import UserView
 from .UserDetailView import UserDetailView
 from .UserEditView import UserEditView
+from .CreateParameterView import CreateParameterView
+from .ParameterView import ParameterView
+from .ParameterEditView import ParameterEditView

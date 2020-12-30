@@ -9,7 +9,6 @@ class UserView(View):
 
     template_name = 'firmware/user.html'
 
-
     def get_users(self):
         users = User.objects.filter(groups__name__in=['user']).all()
         return users

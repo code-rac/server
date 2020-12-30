@@ -1,0 +1,154 @@
+{
+    "table_1": {
+        "tua_may": {
+            "index": "3,4",
+            "description": "con cặc",
+            "name": "Tua máy",
+            "unit": "hpm",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "tps": {
+            "index": "5",
+            "description": "con cặc 2",
+            "name": "TPS",
+            "unit": "Volt",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "tps_2": {
+            "index": "6",
+            "description": "con cặc 3",
+            "name": "TPS",
+            "unit": "Degree Celcius",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "nhiet_do_dong_co": {
+            "index": "7",
+            "description": "con cặc 2",
+            "name": "Nhiệt độ động cơ",
+            "unit": "Volt",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "nhiet_do_dong_co_2": {
+            "index": "8",
+            "description": "Nhiệt độ động cơ",
+            "name": "Nhiệt độ động cơ",
+            "unit": "Degree Celcius",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "nhiet_do_khi_nap": {
+            "index": "9",
+            "description": "con cặc 2",
+            "name": "Nhiệt độ khí nạp",
+            "unit": "Volt",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "nhiet_do_khi_nap_2": {
+            "index": "10",
+            "description": "Nhiệt độ",
+            "name": "nhiệt độ khí nạp",
+            "unit": "Degree Celcius",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "ap_suat_khi_nap": {
+            "index": "11",
+            "description": "aa",
+            "name": "áp suất khí nạp",
+            "unit": "Volt",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "ap_suat_khi_nap_2": {
+            "index": "12",
+            "description": "aaaa",
+            "name": "áp suất khí nạp",
+            "unit": "Pa",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "dien_ap_ac_quy": {
+            "index": "15",
+            "description": "a",
+            "name": "điện áp ắc quy",
+            "unit": "Volt",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "thoi_gian_kim_phun": {
+            "index": "17",
+            "description": "a",
+            "name": "Thời gian kim phun",
+            "unit": "giây",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "thoi_gian_kim_phun_2": {
+            "index": "18",
+            "description": "a",
+            "name": "Thời gian kim phun",
+            "unit": "milli giây",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "goc_danh_lua": {
+            "index": "19",
+            "description": "a",
+            "name": "Góc đánh lửa",
+            "unit": "độ",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "pulcnt": {
+            "index": "20",
+            "description": "a",
+            "name": "PULCNT",
+            "unit": "bước",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        },
+        "IACV": {
+            "index": "21,22",
+            "description": "a",
+            "name": "IACV",
+            "unit": "",
+            "upper": "100",
+            "lower": "200",
+            "recommend": "150",
+            "formula": "formula cai con cac"
+        }
+    }
+}

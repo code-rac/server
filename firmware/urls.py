@@ -15,4 +15,8 @@ urlpatterns = [
     url(r'^user/$', UserView.as_view(), name='user'),
     url(r'^user-detail/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user-detail'),
     url(r'^user-edit/(?P<pk>\d+)/$', UserEditView.as_view(), name='user-edit'),
+    url(r'^create-parameter$', CreateParameterView.as_view(), name='create-parameter'),
+    url(r'^parameter/$', ParameterView.as_view(), name='parameter'),
+    url(r'^parameter-edit/(?P<pk>\d+)/$', ParameterEditView.as_view(), name='parameter-edit'),
+
 ]
