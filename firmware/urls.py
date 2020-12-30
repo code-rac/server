@@ -18,5 +18,7 @@ urlpatterns = [
     url(r'^create-parameter$', CreateParameterView.as_view(), name='create-parameter'),
     url(r'^parameter/$', ParameterView.as_view(), name='parameter'),
     url(r'^parameter-edit/(?P<pk>\d+)/$', ParameterEditView.as_view(), name='parameter-edit'),
-
+    url(r'^create-bike$', CreateBikeView.as_view(), name='create-bike'),
+    url(r'^bike/$', BikeView.as_view(), name='bike'),
+    url(r'^bike-edit/(?P<pk>\d+)/$', BikeEditView.as_view(), name='bike-edit'),
 ]

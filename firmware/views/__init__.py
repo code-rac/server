@@ -12,3 +12,6 @@ from .UserEditView import UserEditView
 from .CreateParameterView import CreateParameterView
 from .ParameterView import ParameterView
 from .ParameterEditView import ParameterEditView
+from .CreateBikeView import CreateBikeView
+from .BikeView import BikeView
+from .BikeEditView import BikeEditView

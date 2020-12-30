@@ -1,0 +1,58 @@
+{% extends 'includes/layout.html' %}
+{% load index %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
+
+    <div class="row">
+        {% for item in items %}
+            <div class='col-lg-4' style='margin: 15px 0'>
+                <div class="row">
+                    <p> <strong> Name </strong>: {{item.name}} </p>
+                    <p> <a href='{% url 'firmware:bike-edit' item.id %}'> Edit </a> </p>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    {% if not create_bike_form %}
+        <a href="{% url 'firmware:create-bike' %}" class='button'> Create bike</a>     
+    {% endif %}
+
+    {% if create_bike_form %}
+        <h3> Create bike form </h3>
+        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+            {{ create_bike_form.as_p }}
+            <button type='submit'> Create bike </button>
+        </form>
+    {% endif %}
+
+    {% if bike %}
+
+        <table style="width:100%">
+            <th></th>
+            {% for r in bike.row %}
+                <th>{{r}}</th>
+            {% endfor %}
+
+            {% for c in bike.column %}
+                <tr>
+                    <th>{{c}}</th>
+
+                    {% for r in bike.row %}
+                        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+                        {% with bike.Forms|index:r|index:c as form %}
+                        <td>{{ form.as_p }}</td>
+                        {% endwith %}
+                        </form>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table> 
+
+    {% endif %}
+
+    
+{% endblock %}
