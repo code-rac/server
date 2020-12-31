@@ -9,6 +9,9 @@ class SelectParameterForm(forms.Form):
     row = forms.IntegerField(widget=forms.HiddenInput)
     column = forms.IntegerField(widget=forms.HiddenInput)
 
+    action = forms.CharField(widget=forms.HiddenInput)
+
+
     def save(self, bike_id):
         '''# kich ban:
         - TH1: bike_id chua noi voi parameter_id:

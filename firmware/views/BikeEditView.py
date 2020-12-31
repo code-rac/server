@@ -23,11 +23,14 @@ class BikeEditView(View):
 
         forms = []
         for bp in bike_parameters:
+            parameter = Parameter.objects.get(pk=bp.parameter_id)
             initial = {
                 'bike_id': pk,
                 'parameter_id': bp.parameter_id,
-                'name': Parameter.objects.get(pk=bp.parameter_id).name,
-                'name_vn': Parameter.objects.get(pk=bp.parameter_id).name_vn
+                'name': parameter.name,
+                'name_vn': parameter.name_vn,
+                'action': 'expression_edit',
+                'expression': bp.expression
             }
             form = ExpressionEditForm(initial=initial)
             forms.append(form)
@@ -43,7 +46,8 @@ class BikeEditView(View):
                 initial = {
                     'choice': self.get_parameter(pk, row, column),
                     'row': row,
-                    'column': column
+                    'column': column,
+                    'action': 'select_parameter'
                 }
                 form = SelectParameterForm(initial=initial)
                 forms.append(form)
@@ -55,7 +59,7 @@ class BikeEditView(View):
             'row': range(6),
             'column': range(31),
             'Forms': Forms,
-            'bike_parameter_forms': self.get_bike_parameters(pk)
+            'bike_parameter_forms': self.get_bike_parameters(pk),
         }
         return bike_data
 
@@ -65,25 +69,40 @@ class BikeEditView(View):
         return TemplateResponse(request, self.template_name, context)
 
 
-    def post(self, request, pk):
+    def select_parameter(self, request, pk):
         form = SelectParameterForm(data=request.POST)
         if form.is_valid():
             try:
                 form.save(pk)
             except IntegrityError:
                 bike_data = self.get_bike(pk)
-                context = {'error': 'Duplicated', 'bike': bike_data}
+                context = {'error': 'Duplicated parameter', 'bike': bike_data}
                 return TemplateResponse(request, self.template_name, context)        
             else:
                 bike_data = self.get_bike(pk)
-                context = {'success': 'Changed', 'bike': bike_data}
-                return TemplateResponse(request, self.template_name, context)        
+                context = {'success': 'Changed parameter', 'bike': bike_data}
+                return TemplateResponse(request, self.template_name, context)      
         bike_data = self.get_bike(pk)
         context = {'bike': bike_data}
         return TemplateResponse(request, self.template_name, context)
 
 
-    def push(self, request, pk):
-        # print('========================', request.PUSH)
+    def expression_edit(self, request, pk):
+        form = ExpressionEditForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            context = {'success': 'Changed expression', 'bike': self.get_bike(pk)}
+            return TemplateResponse(request, self.template_name, context)        
         context = {'bike': self.get_bike(pk)}
         return TemplateResponse(request, self.template_name, context)
+
+    def post(self, request, pk):
+        action = request.POST['action']     
+        if action == 'select_parameter':
+            return self.select_parameter(request, pk)
+        elif action == 'expression_edit':
+            return self.expression_edit(request, pk)
+        else:
+            context = {'bike': self.get_bike(pk), 'error': 'Unknown action'}
+            return TemplateResponse(request, self.template_name, context)
+
