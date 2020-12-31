@@ -58,7 +58,7 @@ class ParameterView(View):
 
             if items:
                 context = {
-                    'search_parameter_form': SearchParameterForm(initial={'action': 'search_parameter'}),
+                    'search_parameter_form': form,
                     'items': items
                 }
             else:
@@ -82,7 +82,7 @@ class ParameterView(View):
 
             context = {
                 'items': items, 
-                'search_parameter_form': form, 
+                'search_parameter_form': SearchParameterForm(initial={'action': 'search_parameter'}), 
                 'success': 'Deleted'
             }
             return TemplateResponse(request, self.template_name, context)
@@ -92,7 +92,7 @@ class ParameterView(View):
 
         context = {
             'items': items, 
-            'search_parameter_form': form, 
+            'search_parameter_form': SearchParameterForm(initial={'action': 'search_parameter'}), 
         }
         return TemplateResponse(request, self.template_name, context)
 
