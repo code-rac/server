@@ -6,6 +6,7 @@ from ..models import *
 class BikeCloneForm(forms.Form):
 
     pk = forms.IntegerField(widget=forms.HiddenInput)
+    action = forms.CharField(widget=forms.HiddenInput)
 
     def get_new_name(self, name):
         i = 0
@@ -23,7 +24,6 @@ class BikeCloneForm(forms.Form):
         bike = Bike.objects.get(pk=pk)
         new_name = self.get_new_name(bike.name)
         new_bike = Bike.objects.create(
-            ecu_id=bike.ecu_id,
             name=new_name,
             generation=bike.generation,
             code=bike.code,

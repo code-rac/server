@@ -7,7 +7,7 @@
 
     <div class="row">
         {% for item in items %}
-            <div class='col-lg-4' style='margin: 15px 0'>
+            <div class='col-lg-8' style='margin: 15px 0'>
                 <div class="row">
                     <p> <strong> Name </strong>: {{item.name}} </p>
                     <p> <strong> Ecu_id </strong>: {{item.ecu_id}} </p>
@@ -16,16 +16,27 @@
                     <p> <strong> Start_at </strong>: {{item.start_at}} </p>
                     <p> <strong> is_used </strong>: {{item.is_used}} </p>
                     <p> <strong> cc </strong>: {{item.cc}} </p>
-                    <p> <a href='{% url 'firmware:bike-edit' item.id %}'> Edit </a> </p>
-                    <form enctype='multipart/form-data' method='post'>{% csrf_token %}
-                        {{ item.clone_form.as_p }}
-                        <button type='submit'> Clone </button>
-                    </form>
+                    <div class="col-lg-2">
+                        <p> <a href='{% url 'firmware:bike-edit' item.id %}'> Edit </a> </p>
+                    </div>
 
-                    <form enctype='multipart/form-data' method='post'>{% csrf_token %}
-                        {{ item.delete_form.as_p }}
-                        <button type='submit'> Delete </button>
-                    </form>
+                    {% if item.ecu_id %}
+                        <div class="col-lg-2">
+                            <p> <a href='{% url 'firmware:bike-json' item.ecu_id %}'> Json </a> </p>
+                        </div>
+                    {% endif %}
+                    <div class="col-lg-2">
+                        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+                            {{ item.clone_form.as_p }}
+                            <button type='submit'> Clone </button>
+                        </form>
+                    </div>
+                    <div class="col-lg-2">
+                        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+                            {{ item.delete_form.as_p }}
+                            <button type='submit'> Delete </button>
+                        </form>
+                    </div>
 
                 </div>
             </div>

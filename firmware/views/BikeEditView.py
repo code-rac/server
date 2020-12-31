@@ -117,9 +117,10 @@ class BikeEditView(View):
             form.save()
             context = {'success': 'Changed bike', 'bike': self.get_bike(pk)}
             return TemplateResponse(request, self.template_name, context)        
-        context = {'bike': self.get_bike(pk)}
+        bike_data = self.get_bike(pk)
+        bike_data['bike_edit_form'] = form
+        context = {'bike': bike_data}
         return TemplateResponse(request, self.template_name, context)
-
 
     def post(self, request, pk):
         action = request.POST['action']     

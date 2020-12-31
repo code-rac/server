@@ -2,6 +2,8 @@ from django import forms
 from ..models import *
 from django.forms import ModelChoiceField
 
+# TODO: khong add 2 hang khac nhau
+
 class ParameterChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
         return obj.name

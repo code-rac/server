@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^create-bike$', CreateBikeView.as_view(), name='create-bike'),
     url(r'^bike/$', BikeView.as_view(), name='bike'),
     url(r'^bike-edit/(?P<pk>\d+)/$', BikeEditView.as_view(), name='bike-edit'),
+    url(r'^bike-json/(?P<ecu_id>\S{2}-\S{2}-\S{2}-\S{2})/$', BikeJsonView.as_view(), name='bike-json'),
 ]

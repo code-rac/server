@@ -3,6 +3,18 @@
 {% load humanize %}
 {% load mathfilters %}
 {% block content %}
+    
+    {% if not create_parameter_form and not parameter_edit_form %}
+        <a href="{% url 'firmware:create-parameter' %}" class='button'> Create parameter</a>     
+    {% endif %}
+
+    {% if create_parameter_form %}
+        <h3> Create parameter form </h3>
+        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+            {{ create_parameter_form.as_p }}
+            <button type='submit'> Create parameter </button>
+        </form>
+    {% endif %}
 
 
     <div class="row">
@@ -36,18 +48,6 @@
             </div>
         {% endfor %}
     </div>
-    
-    {% if not create_parameter_form and not parameter_edit_form %}
-        <a href="{% url 'firmware:create-parameter' %}" class='button'> Create parameter</a>     
-    {% endif %}
-
-    {% if create_parameter_form %}
-        <h3> Create parameter form </h3>
-        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
-            {{ create_parameter_form.as_p }}
-            <button type='submit'> Create parameter </button>
-        </form>
-    {% endif %}
 
 
 

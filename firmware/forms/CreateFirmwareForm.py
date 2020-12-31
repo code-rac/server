@@ -13,4 +13,3 @@ class CreateFirmwareForm(forms.Form):
     def save(self):
         firmware = Firmware.objects.create(**self.cleaned_data)
         firmware.save()
-        return firmware

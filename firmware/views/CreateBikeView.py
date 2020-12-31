@@ -22,7 +22,8 @@ class CreateBikeView(View):
                 'create_bike_form': CreateBikeForm(),
                 'success': 'Succesfully created new bike'
             }
-        else:
-            context = {'create_bike_form': form}
+            return TemplateResponse(request, self.template_name, context)
+        print(form)
+        context = {'create_bike_form': form, 'error': 'Failed to create new bike'}
         return TemplateResponse(request, self.template_name, context)
 
