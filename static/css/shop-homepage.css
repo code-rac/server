@@ -73,3 +73,10 @@ footer {
     text-transform: uppercase;
     padding: 5px 0 5px 0;
 }
+
+.container {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+}

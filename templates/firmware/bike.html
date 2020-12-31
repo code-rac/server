@@ -32,40 +32,42 @@
     {% if bike %}
 
         <div class="row">
-                <p> <strong> Bike </strong>: {{bike.bike.name}} </p>
+            <p> <strong> Bike </strong>: {{bike.bike.name}} </p>
         </div>
 
         <div class="row">
-            <div class="column">
-                <table style="width:100%">
-                    <tr>
-                    <th> Name</th>
-                    <th> Expression</th>
-                    </tr>
-
-                </table> 
-            </div>
-            <div class="column">
-                <table style="width:100%">
-                    <th></th>
-                    {% for r in bike.row %}
-                        <th>{{r}}</th>
-                    {% endfor %}
-
-                    {% for c in bike.column %}
-                        <tr>
-                            <th>{{c}}</th>
-
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">  
+                        {% for form in bike.bike_parameter_forms %}
+                            <form enctype='multipart/form-data' method='push'>{% csrf_token %}
+                                {{ form.as_table }}
+                                <button type='submit'> Submit </button>
+                            </form>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6"> 
+                        <table style="width:100%">
+                            <th></th>
                             {% for r in bike.row %}
-                                <form enctype='multipart/form-data' method='post'>{% csrf_token %}
-                                {% with bike.Forms|index:r|index:c as form %}
-                                <td>{{ form.as_p }}</td>
-                                {% endwith %}
-                                </form>
+                                <th>{{r}}</th>
                             {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table> 
+
+                            {% for c in bike.column %}
+                                <tr>
+                                    <th>{{c}}</th>
+                                    {% for r in bike.row %}
+                                        <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+                                        {% with bike.Forms|index:r|index:c as form %}
+                                        <td>{{ form.as_p }}</td>
+                                        {% endwith %}
+                                        </form>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </table> 
+                    </div>
+                </div>
             </div>
         </div>
 

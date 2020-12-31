@@ -10,3 +10,4 @@ from .SearchParameterForm import SearchParameterForm
 from .ParameterEditForm import ParameterEditForm
 from .CreateBikeForm import CreateBikeForm
 from .SelectParameterForm import SelectParameterForm
+from .ExpressionEditForm import ExpressionEditForm

@@ -18,6 +18,20 @@ class BikeEditView(View):
             parameter = Parameter.objects.get(pk=item.parameter_id)
             return parameter.id
 
+    def get_bike_parameters(self, pk):
+        bike_parameters = BikeParameter.objects.filter(bike_id=pk).all()
+
+        forms = []
+        for bp in bike_parameters:
+            initial = {
+                'bike_id': pk,
+                'parameter_id': bp.parameter_id,
+                'name': Parameter.objects.get(pk=bp.parameter_id).name,
+                'name_vn': Parameter.objects.get(pk=bp.parameter_id).name_vn
+            }
+            form = ExpressionEditForm(initial=initial)
+            forms.append(form)
+        return forms
 
     def get_bike(self, pk):
         bike = Bike.objects.get(pk=pk)
@@ -35,14 +49,13 @@ class BikeEditView(View):
                 forms.append(form)
             Forms.append(forms)
 
-        parameters = BikeParameter.objects.filter(bike_id=pk).all()
 
         bike_data = {
             'bike': bike, 
             'row': range(6),
             'column': range(31),
             'Forms': Forms,
-            'parameters': parameters
+            'bike_parameter_forms': self.get_bike_parameters(pk)
         }
         return bike_data
 
@@ -70,3 +83,7 @@ class BikeEditView(View):
         return TemplateResponse(request, self.template_name, context)
 
 
+    def push(self, request, pk):
+        # print('========================', request.PUSH)
+        context = {'bike': self.get_bike(pk)}
+        return TemplateResponse(request, self.template_name, context)
