@@ -12,7 +12,8 @@ class SelectParameterForm(forms.Form):
     choice = ParameterChoiceField(
         widget=forms.Select(attrs={'onchange': 'this.form.submit();'}),
         label='',
-        queryset=Parameter.objects.all()
+        queryset=Parameter.objects.all(),
+        required=False
     )
     row = forms.IntegerField(widget=forms.HiddenInput)
     column = forms.IntegerField(widget=forms.HiddenInput)
