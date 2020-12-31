@@ -1,13 +1,23 @@
 from django import forms
 from ..models import *
+from django.forms import ModelChoiceField
+
+class ParameterChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.name
 
 class SelectParameterForm(forms.Form):
-    try:
-        CHOICES = tuple([['-', '-']] + [[bp.id, bp.name] for bp in Parameter.objects.all()])
-    except:
-        CHOICES = tuple([['-', '-']])
+    # try:
+    #     CHOICES = tuple([['-', '-']] + [[bp.id, bp.name] for bp in Parameter.objects.all()])
+    # except:
+    #     CHOICES = tuple([['-', '-']])
 
-    choice = forms.ChoiceField(label='', choices=CHOICES, widget=forms.Select(attrs={'onchange': 'this.form.submit();'}))
+    # choice = forms.ChoiceField(label='', choices=CHOICES, widget=forms.Select(attrs={'onchange': 'this.form.submit();'}))
+    choice = ParameterChoiceField(
+        widget=forms.Select(attrs={'onchange': 'this.form.submit();'}), 
+        label='', 
+        queryset=Parameter.objects.all()
+    )
     row = forms.IntegerField(widget=forms.HiddenInput)
     column = forms.IntegerField(widget=forms.HiddenInput)
     action = forms.CharField(widget=forms.HiddenInput)
@@ -21,13 +31,19 @@ class SelectParameterForm(forms.Form):
         bps = BikeParameter.objects.filter(parameter_id=parameter_id, bike_id=bike_id).all()
         return '+'.join(bp.name for bp in bps)
 
+    def get_parameter_id(self, parameter):
+        if parameter:
+            return parameter.id
+        return '-'
+
     def save(self, bike_id):
-        parameter_id = self.cleaned_data['choice']
+        parameter_id = self.get_parameter_id(self.cleaned_data['choice'])
         row = self.cleaned_data['row']
         column = self.cleaned_data['column']
         is_used = self.cleaned_data['is_used']
 
         try:
+            print(bike_id, row, column)
             old_bp = BikeParameter.objects.get(bike_id=bike_id, row=row, column=column)
         except BikeParameter.DoesNotExist:
             if parameter_id != '-':
