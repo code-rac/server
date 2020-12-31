@@ -13,24 +13,28 @@ class BikeEditView(View):
         try:
             item = BikeParameter.objects.get(bike_id=bike_id, row=row, column=column)
         except BikeParameter.DoesNotExist:
-            return '-'
+            return '-', False
         else:
             parameter = Parameter.objects.get(pk=item.parameter_id)
-            return parameter.id
+            return parameter.id, item.is_used
 
     def get_bike_parameters(self, pk):
-        bike_parameters = BikeParameter.objects.filter(bike_id=pk).all()
+        bpes = BikeParameterExpression.objects.filter(bike_id=pk).all()
 
         forms = []
-        for bp in bike_parameters:
-            parameter = Parameter.objects.get(pk=bp.parameter_id)
+        for bpe in bpes:
+            parameter = Parameter.objects.get(pk=bpe.parameter_id)
+            bps = BikeParameter.objects.filter(bike_id=pk, parameter_id=bpe.parameter_id).all()
+
             initial = {
                 'bike_id': pk,
-                'parameter_id': bp.parameter_id,
+                'parameter_id': bpe.parameter_id,
                 'name': parameter.name,
                 'name_vn': parameter.name_vn,
                 'action': 'expression_edit',
-                'expression': bp.expression
+                'expression': bpe.expression,
+                'variable_name': ', '.join(bp.name for bp in bps),
+                'is_used': bpe.is_used
             }
             form = ExpressionEditForm(initial=initial)
             forms.append(form)
@@ -43,11 +47,13 @@ class BikeEditView(View):
         for row in range(6):
             forms = []
             for column in range(31):
+                choice, is_used = self.get_parameter(pk, row, column)
                 initial = {
-                    'choice': self.get_parameter(pk, row, column),
+                    'choice': choice,
                     'row': row,
                     'column': column,
-                    'action': 'select_parameter'
+                    'action': 'select_parameter',
+                    'is_used': is_used
                 }
                 form = SelectParameterForm(initial=initial)
                 forms.append(form)
@@ -72,18 +78,10 @@ class BikeEditView(View):
     def select_parameter(self, request, pk):
         form = SelectParameterForm(data=request.POST)
         if form.is_valid():
-            try:
-                form.save(pk)
-            except IntegrityError:
-                bike_data = self.get_bike(pk)
-                context = {'error': 'Duplicated parameter', 'bike': bike_data}
-                return TemplateResponse(request, self.template_name, context)        
-            else:
-                bike_data = self.get_bike(pk)
-                context = {'success': 'Changed parameter', 'bike': bike_data}
-                return TemplateResponse(request, self.template_name, context)      
-        bike_data = self.get_bike(pk)
-        context = {'bike': bike_data}
+            form.save(pk)      
+            context = {'success': 'Changed parameter', 'bike': self.get_bike(pk)}
+            return TemplateResponse(request, self.template_name, context)      
+        context = {'bike': self.get_bike(pk)}
         return TemplateResponse(request, self.template_name, context)
 
 
@@ -95,6 +93,7 @@ class BikeEditView(View):
             return TemplateResponse(request, self.template_name, context)        
         context = {'bike': self.get_bike(pk)}
         return TemplateResponse(request, self.template_name, context)
+
 
     def post(self, request, pk):
         action = request.POST['action']     

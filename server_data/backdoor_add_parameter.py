@@ -14,7 +14,6 @@ def backdoor_add_parameter(key, value):
         'recommend': float(value['recommend'])
     }
     r = requests.post(URL, data=data)
-    print(r.status_code)
 
 table = json.load(open('data/table.json'))
 
