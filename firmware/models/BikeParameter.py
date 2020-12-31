@@ -7,3 +7,6 @@ class BikeParameter(models.Model):
     row = models.IntegerField()
     column = models.IntegerField()
     expression = models.CharField(max_length=200, default='') # default = parameter.name
+
+    class Meta:
+        unique_together = ('bike_id', 'parameter_id')

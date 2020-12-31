@@ -1,5 +1,6 @@
 from django.views import View
 from django.template.response import TemplateResponse
+from django.db import IntegrityError
 
 from ..models import *
 from ..forms import *
@@ -34,11 +35,14 @@ class BikeEditView(View):
                 forms.append(form)
             Forms.append(forms)
 
+        parameters = BikeParameter.objects.filter(bike_id=pk).all()
+
         bike_data = {
             'bike': bike, 
             'row': range(6),
             'column': range(31),
             'Forms': Forms,
+            'parameters': parameters
         }
         return bike_data
 
@@ -51,10 +55,16 @@ class BikeEditView(View):
     def post(self, request, pk):
         form = SelectParameterForm(data=request.POST)
         if form.is_valid():
-            form.save(pk)
-            bike_data = self.get_bike(pk)
-            context = {'success': 'Changed', 'bike': bike_data}
-            return TemplateResponse(request, self.template_name,    context)        
+            try:
+                form.save(pk)
+            except IntegrityError:
+                bike_data = self.get_bike(pk)
+                context = {'error': 'Duplicated', 'bike': bike_data}
+                return TemplateResponse(request, self.template_name, context)        
+            else:
+                bike_data = self.get_bike(pk)
+                context = {'success': 'Changed', 'bike': bike_data}
+                return TemplateResponse(request, self.template_name, context)        
         bike_data = self.get_bike(pk)
         context = {'bike': bike_data}
         return TemplateResponse(request, self.template_name, context)
