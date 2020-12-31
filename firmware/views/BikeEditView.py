@@ -40,6 +40,21 @@ class BikeEditView(View):
             forms.append(form)
         return forms
 
+    def get_bike_edit_form(self, pk):
+        bike = Bike.objects.get(pk=pk)
+        initial = {
+            'action': 'bike_edit',
+            'pk': pk,
+            'name': bike.name,
+            'ecu_id': bike.ecu_id,
+            'generation': bike.generation,
+            'code': bike.code,
+            'start_at': bike.start_at,
+            'is_used': bike.is_used,
+            'cc': bike.cc
+        }
+        return BikeEditForm(initial=initial)
+
     def get_bike(self, pk):
         bike = Bike.objects.get(pk=pk)
         Forms = []
@@ -66,6 +81,7 @@ class BikeEditView(View):
             'column': range(31),
             'Forms': Forms,
             'bike_parameter_forms': self.get_bike_parameters(pk),
+            'bike_edit_form': self.get_bike_edit_form(pk)
         }
         return bike_data
 
@@ -95,12 +111,24 @@ class BikeEditView(View):
         return TemplateResponse(request, self.template_name, context)
 
 
+    def bike_edit(self, request, pk):
+        form = BikeEditForm(data=request.POST)        
+        if form.is_valid():
+            form.save()
+            context = {'success': 'Changed bike', 'bike': self.get_bike(pk)}
+            return TemplateResponse(request, self.template_name, context)        
+        context = {'bike': self.get_bike(pk)}
+        return TemplateResponse(request, self.template_name, context)
+
+
     def post(self, request, pk):
         action = request.POST['action']     
         if action == 'select_parameter':
             return self.select_parameter(request, pk)
         elif action == 'expression_edit':
             return self.expression_edit(request, pk)
+        elif action == 'bike_edit':
+            return self.bike_edit(request, pk)
         else:
             context = {'bike': self.get_bike(pk), 'error': 'Unknown action'}
             return TemplateResponse(request, self.template_name, context)

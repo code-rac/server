@@ -9,5 +9,7 @@ from .CreateParameterForm import CreateParameterForm
 from .SearchParameterForm import SearchParameterForm
 from .ParameterEditForm import ParameterEditForm
 from .CreateBikeForm import CreateBikeForm
+from .BikeEditForm import BikeEditForm
 from .SelectParameterForm import SelectParameterForm
 from .ExpressionEditForm import ExpressionEditForm
+from .BikeCloneForm import BikeCloneForm

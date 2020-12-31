@@ -10,8 +10,17 @@
             <div class='col-lg-4' style='margin: 15px 0'>
                 <div class="row">
                     <p> <strong> Name </strong>: {{item.name}} </p>
+                    <p> <strong> Ecu_id </strong>: {{item.ecu_id}} </p>
+                    <p> <strong> Generation </strong>: {{item.generation}} </p>
+                    <p> <strong> Code </strong>: {{item.code}} </p>
+                    <p> <strong> Start_at </strong>: {{item.start_at}} </p>
+                    <p> <strong> is_used </strong>: {{item.is_used}} </p>
+                    <p> <strong> cc </strong>: {{item.cc}} </p>
                     <p> <a href='{% url 'firmware:bike-edit' item.id %}'> Edit </a> </p>
-
+                    <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+                        {{ item.form.as_p }}
+                        <button type='submit'> Clone </button>
+                    </form>
                 </div>
             </div>
         {% endfor %}
@@ -33,6 +42,10 @@
 
         <div class="row">
             <p> <strong> Bike </strong>: {{bike.bike.name}} </p>
+            <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+                {{ bike.bike_edit_form.as_ul }}
+                <button type='submit'> Submit </button>
+            </form>
         </div>
 
         <div class="row">

@@ -7,4 +7,4 @@ class CreateBikeForm(forms.ModelForm):
 
     class Meta:
         model = Bike
-        fields = ('name', )
+        fields = ('name', 'ecu_id', 'generation', 'code', 'start_at', 'is_used', 'cc')
