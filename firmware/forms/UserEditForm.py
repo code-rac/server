@@ -2,7 +2,7 @@ from ..models import *
 from django import forms
 
 class UserEditForm(forms.Form):
-    
+
     pk = forms.IntegerField(widget=forms.HiddenInput)
     username = forms.CharField()
     phone = forms.CharField()

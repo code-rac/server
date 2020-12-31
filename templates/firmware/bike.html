@@ -40,10 +40,12 @@
                 <div class="row">
                     <div class="col-md-6">  
                         {% for form in bike.bike_parameter_forms %}
-                            <form enctype='multipart/form-data' method='post'>{% csrf_token %}
-                                {{ form.as_table }}
-                                <button type='submit'> Submit </button>
-                            </form>
+                            <div class="row">
+                                <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+                                    {{ form.as_ul }}
+                                    <button type='submit'> Submit </button>
+                                </form>
+                            </div>
                         {% endfor %}
                     </div>
                     <div class="col-md-6"> 
@@ -59,7 +61,7 @@
                                     {% for r in bike.row %}
                                         <form enctype='multipart/form-data' method='post'>{% csrf_token %}
                                         {% with bike.Forms|index:r|index:c as form %}
-                                        <td>{{ form.as_p }}</td>
+                                        <td>{{ form.as_ul }}</td>
                                         {% endwith %}
                                         </form>
                                     {% endfor %}

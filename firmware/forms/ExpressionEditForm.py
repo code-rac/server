@@ -7,10 +7,10 @@ class ExpressionEditForm(forms.Form):
     parameter_id = forms.IntegerField(widget=forms.HiddenInput)
     name = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
     name_vn = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    variable_name = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    expression = forms.CharField()
+    variable_name = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly', 'rows': 1, 'cols': 60}))
+    expression = forms.CharField(widget=forms.Textarea(attrs={'rows': 1, 'cols': 60}))
+    is_used = forms.BooleanField(label='', required=False, widget=forms.CheckboxInput(attrs={'onchange': 'this.form.submit();'}))
     action = forms.CharField(widget=forms.HiddenInput)
-    is_used = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'onchange': 'this.form.submit();'}))
 
     def save(self):
         bike_id = self.cleaned_data['bike_id']

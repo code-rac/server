@@ -7,7 +7,7 @@ class BikeParameter(models.Model):
     parameter_id = models.IntegerField()
     row = models.IntegerField()
     column = models.IntegerField()
-    is_used = models.BooleanField()
-    
+    is_used = models.BooleanField(default=False)
+
     class Meta:
         unique_together = ('bike_id', 'row', 'column')
