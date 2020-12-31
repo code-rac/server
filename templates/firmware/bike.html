@@ -18,9 +18,15 @@
                     <p> <strong> cc </strong>: {{item.cc}} </p>
                     <p> <a href='{% url 'firmware:bike-edit' item.id %}'> Edit </a> </p>
                     <form enctype='multipart/form-data' method='post'>{% csrf_token %}
-                        {{ item.form.as_p }}
+                        {{ item.clone_form.as_p }}
                         <button type='submit'> Clone </button>
                     </form>
+
+                    <form enctype='multipart/form-data' method='post'>{% csrf_token %}
+                        {{ item.delete_form.as_p }}
+                        <button type='submit'> Delete </button>
+                    </form>
+
                 </div>
             </div>
         {% endfor %}

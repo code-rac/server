@@ -35,7 +35,8 @@ class ParameterView(View):
                 'unit': parameter.unit, 
                 'upper': parameter.upper, 
                 'lower': parameter.lower, 
-                'recommend': parameter.recommend
+                'recommend': parameter.recommend,
+                'delete_form': DeleteParameterForm(initial={'action': 'delete', 'pk': parameter.id})
             }
             items.append(item)
         return items
@@ -43,20 +44,21 @@ class ParameterView(View):
     def get(self, request):
         parameters = self.get_parameters()
         items = self.get_items(parameters)
+
         context = {
             'items': items, 
-            'search_parameter_form': SearchParameterForm()
+            'search_parameter_form': SearchParameterForm(initial={'action': 'search_parameter'})
         }
         return TemplateResponse(request, self.template_name, context)
 
-    def post(self, request):
+    def search_parameter(self, request):
         form = SearchParameterForm(request.POST)
         if form.is_valid():
             items = self.get_parameter_from_form(form)
 
             if items:
                 context = {
-                    'search_parameter_form': SearchParameterForm(),
+                    'search_parameter_form': SearchParameterForm(initial={'action': 'search_parameter'}),
                     'items': items
                 }
             else:
@@ -69,3 +71,41 @@ class ParameterView(View):
                 'search_parameter_form': form,
             }
         return TemplateResponse(request, self.template_name, context)
+
+
+    def delete_parameter(self, request):
+        form = DeleteParameterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            parameters = self.get_parameters()
+            items = self.get_items(parameters)
+
+            context = {
+                'items': items, 
+                'search_parameter_form': form, 
+                'success': 'Deleted'
+            }
+            return TemplateResponse(request, self.template_name, context)
+
+        parameters = self.get_parameters()
+        items = self.get_items(parameters)
+
+        context = {
+            'items': items, 
+            'search_parameter_form': form, 
+        }
+        return TemplateResponse(request, self.template_name, context)
+
+
+    def post(self, request):
+        action = request.POST['action']     
+        if action == 'search_parameter':
+            return self.search_parameter(request)
+        elif action == 'delete':
+            return self.delete_parameter(request)
+        else:
+            parameters = self.get_parameters()
+            items = self.get_items(parameters)
+            context = {'items': items, 'error': 'Unknown action'}
+            return TemplateResponse(request, self.template_name, context)
+

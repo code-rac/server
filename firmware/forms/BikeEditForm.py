@@ -10,11 +10,11 @@ class BikeEditForm(forms.Form):
     generation = forms.IntegerField()
     code = forms.CharField()
     start_at = forms.DateField()
-    is_used = forms.BooleanField()
+    is_used = forms.BooleanField(label='', required=False, widget=forms.CheckboxInput(attrs={'onchange': 'this.form.submit();'}))
     cc = forms.IntegerField()
     action = forms.CharField(widget=forms.HiddenInput)
     pk = forms.IntegerField(widget=forms.HiddenInput)
-    
+
     def save(self):
         bike = Bike.objects.get(pk=self.cleaned_data['pk'])
         bike.name = self.cleaned_data['name']

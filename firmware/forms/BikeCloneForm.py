@@ -6,7 +6,7 @@ from ..models import *
 class BikeCloneForm(forms.Form):
 
     pk = forms.IntegerField(widget=forms.HiddenInput)
-    
+
     def get_new_name(self, name):
         i = 0
         while True:

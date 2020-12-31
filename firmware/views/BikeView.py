@@ -9,14 +9,9 @@ class BikeView(View):
 
     template_name = 'firmware/bike.html'
 
-    def get_bikes(self):
-        bikes = Bike.objects.all()
-        return bikes
-
-
-    def get_items(self, bikes):
+    def get_items(self):
         items = []
-        for bike in bikes:
+        for bike in Bike.objects.all():
             item = {
                 'id': bike.id,
                 'ecu_id': bike.ecu_id,
@@ -26,33 +21,56 @@ class BikeView(View):
                 'start_at': bike.start_at,
                 'is_used': bike.is_used,
                 'cc': bike.cc,
-                'form': self.get_bike_clone_form(bike.id)
+                'clone_form': BikeCloneForm(initial={'action': 'clone', 'pk': bike.id}),
+                'delete_form': DeleteBikeForm(initial={'action': 'delete', 'pk': bike.id})
             }
             items.append(item)
         return items
         
     def get(self, request):
-        bikes = self.get_bikes()
-        items = self.get_items(bikes)
+        items = self.get_items()
         context = {
             'items': items, 
         }
         return TemplateResponse(request, self.template_name, context)
 
-    def get_bike_clone_form(self, pk):
-        initial = {'pk': pk}
-        return BikeCloneForm(initial=initial)
-
-    def post(self, request):
+    def clone_bike(self, request):
         form = BikeCloneForm(request.POST)
         if form.is_valid():
             form.save()
-            bikes = self.get_bikes()
             context = {
-                'items': self.get_items(bikes),
+                'items': self.get_items(),
                 'success': 'Succesfully cloned'
             }
             return TemplateResponse(request, self.template_name, context)
-        bikes = self.get_bikes()
-        context = {'items': self.get_items(bikes), 'error': 'Cloned failed'}
+        context = {'items': self.get_items(), 'error': 'Cloned failed'}
         return TemplateResponse(request, self.template_name, context)
+
+    def delete_bike(self, request):
+        form = DeleteBikeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            context = {
+                'items': self.get_items(),
+                'success': 'Deleted'
+            }
+            return TemplateResponse(request, self.template_name, context)
+        context = {
+            'items': self.get_items(),
+            'error': 'Deleted failed'
+        }
+        return TemplateResponse(request, self.template_name, context)
+
+    def post(self, request):
+        action = request.POST['action']     
+        if action == 'clone':
+            return self.clone_bike(request)
+        elif action == 'delete':
+            return self.delete_bike(request)
+        else:
+            context = {
+                'items': self.get_items(),
+                'error': 'Deleted failed'
+            }
+            return TemplateResponse(request, self.template_name, context)
+

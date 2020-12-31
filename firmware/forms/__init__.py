@@ -13,3 +13,5 @@ from .BikeEditForm import BikeEditForm
 from .SelectParameterForm import SelectParameterForm
 from .ExpressionEditForm import ExpressionEditForm
 from .BikeCloneForm import BikeCloneForm
+from .DeleteParameterForm import DeleteParameterForm
+from .DeleteBikeForm import DeleteBikeForm
